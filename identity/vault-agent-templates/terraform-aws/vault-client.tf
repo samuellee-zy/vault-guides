@@ -2,6 +2,7 @@
 // Vault Client Instance
 
 resource "aws_instance" "vault-client" {
+  count                       = 2
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
   subnet_id                   = module.vault_demo_vpc.public_subnets[0]
@@ -30,7 +31,7 @@ data "template_file" "vault-client" {
   template = file("${path.module}/templates/userdata-vault-client.tpl")
 
   vars = {
-    tpl_vault_zip_file          = var.vault_zip_file
-    tpl_vault_server_addr  = aws_instance.vault-server[0].private_ip
+    tpl_vault_zip_file    = var.vault_zip_file
+    tpl_vault_server_addr = aws_instance.vault-server[0].private_ip
   }
 }
