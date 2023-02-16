@@ -31,7 +31,7 @@ data "aws_caller_identity" "current" {
 }
 
 data "template_file" "vault-server" {
-  template = templatefile("${path.module}/templates/userdata-vault-server.tpl")
+  template = file("${path.module}/templates/userdata-vault-server.tpl")
 
   vars = {
     tpl_vault_zip_file          = var.vault_zip_file
